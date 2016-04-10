@@ -1,6 +1,7 @@
 package com.henry.blog.dao;
 
 import com.henry.blog.model.Article;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -9,6 +10,13 @@ import java.util.List;
  */
 public interface ArticleDao {
     int addArticle(Article article);
-    int getLastedId();
-    List<Article> selectByCategory(Integer category);
+    Integer getLastedId();
+
+    /**
+     * 通过类别查找博客
+     * @param category
+     * @return
+     */
+    List<Article> selectByCategory(@Param("category") Integer category);
+
 }

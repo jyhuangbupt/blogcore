@@ -11,7 +11,7 @@ public class Article {
     private Integer category;
     private String title;
     private String content;
-    private String abstracts;
+    private String brief;
 
     @Override
     public String toString() {
@@ -23,7 +23,7 @@ public class Article {
                 ", category=" + category +
                 ", title='" + title + '\'' +
                 ", content='" + content + '\'' +
-                ", abstracts='" + abstracts + '\'' +
+                ", brief='" + brief + '\'' +
                 '}';
     }
 
@@ -83,11 +83,11 @@ public class Article {
         this.content = content;
     }
 
-    public String getAbstracts() {
-        return abstracts;
+    public String getBrief() {
+        return brief;
     }
 
-    public void setAbstracts(String abstracts) {
-        this.abstracts = abstracts;
+    public void setBrief(String brief) {
+        this.brief = brief;
     }
 }

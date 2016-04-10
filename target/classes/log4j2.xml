@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- status debug is print the log loading, monitorInterval time interval -->
+<Configuration status="off" monitorInterval="20">
+    <!-- Log sys need parameters-->
+    <Properties>
+        <!-- Log base save path -->
+        <Property name="LOG_HOME">log</Property>
+        <!-- Log base backup path -->
+        <Property name="LOG_BACKUP">${LOG_HOME}/backup</Property>
+        <!-- Develop log save path  -->
+        <Property name="LOG_DEV">${LOG_HOME}/develop</Property>
+        <!-- Service log save path -->
+        <Property name="LOG_SERVICE">${LOG_HOME}/service</Property>
+    </Properties>
+    <Appenders>
+        <!--Define Console Print -->
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="[%level] %date{yyy-MM-dd->HH:mm:ss} Thread->[%thread] {%file:%line}$ %msg%n"/>
+        </Console>
+        <!--Define DevLog print and save-->
+        <RollingRandomAccessFile name="DevLog" fileName="${LOG_DEV}/dev.log"
+                                 filePattern="${LOG_DEV}/%d{yyyy-MM}/dev-%d{yyyyMMdd-HH-mm-ss}.log.gz">
+            <PatternLayout pattern="[%level] %date{yyy-MM-dd->HH:mm:ss} Thread->%thread {%file:%line}$ %msg%n"/>
+            <Policies>
+                <SizeBasedTriggeringPolicy size="500MB"/>
+            </Policies>
+        </RollingRandomAccessFile>
+    </Appenders>
+    <Loggers>
+        <Root level="DEBUG">
+            <AppenderRef ref="Console"/>
+        </Root>
+        <Logger name="dev" level="debug" additivity="false">
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="DevLog"/>
+        </Logger>
+        <Logger name="service" level="info" additivity="false">
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="DevLog"/>
+        </Logger>
+    </Loggers>
+</Configuration>

@@ -8,6 +8,10 @@ import com.henry.blog.util.JacksonJsonUtils;
 import com.henry.blog.util.LogPool;
 import com.henry.blog.util.UuidGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
+import sun.rmi.runtime.Log;
+
+import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 /**
  * Created by henry on 2016/1/2.
@@ -15,6 +19,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 public class ArticleServiceImpl extends AbstractController implements ArticleService {
     @Autowired
     ArticleDao articleDao;
+    @Autowired
+    private HttpServletRequest request;
     /**
      * 添加文章
      * @param dataJson
@@ -31,7 +37,8 @@ public class ArticleServiceImpl extends AbstractController implements ArticleSer
             article.setUuid(uuid);
             article.setCreateTime(System.currentTimeMillis());
             articleDao.addArticle(article);
-            resp = generateResponseContentByObject(article.getTitle(), "添加博客成功", 0);
+            return generateResponseContentByObject(article,"chegg",0);
+//            resp = generateResponseContent("", "添加博客成功", 0);
         } catch (Exception e) {
             e.printStackTrace();
             resp = generateResponseContent("", "系统开小差啦,正在修复中...", 1);
@@ -47,6 +54,18 @@ public class ArticleServiceImpl extends AbstractController implements ArticleSer
      */
     public String selectByCategory(String dataJson){
         String resp = null;
+        try{
+            LogPool.devlogger.info("===========================select CateGory Start======================");
+            Integer category = JacksonJsonUtils.getNodeByName(dataJson,"category").asInt();
+            List<Article> articles = articleDao.selectByCategory(category);
+            System.out.println(articles);
+            resp = generateResponseContentByObject(articles, "查询博客成功", 0);
+        }catch (Exception e){
+            e.getStackTrace();
+            LogPool.devlogger.error(e);
+            resp = generateResponseContent("", "系统开小差啦,正在修复中...", 1);
+        }
+        LogPool.devlogger.info("---------------------------select By category complete-------------------");
         return resp;
     }
 }

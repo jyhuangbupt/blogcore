@@ -24,7 +24,7 @@ public class JsonUtils {
 	}
 	
 	/**
-	 * @Description：根据json字符串和json节点名称获取json节点
+	 * @Description:根据json字符串和json节点名称获取json节点
 	 * @author： huhao
 	 * @Time  ：2014年9月10日上午11:08:07
 	 * @return：JsonNode json节点
@@ -101,7 +101,7 @@ public class JsonUtils {
 			e.printStackTrace();
 		}
 		 return null;
-	 };
+	 }
 	 
 	 public static <T> T json2ObjectByInputStread(InputStream in,TypeReference<T> tr) {
 		 if(in == null) {

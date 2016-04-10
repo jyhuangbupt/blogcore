@@ -10,7 +10,7 @@ import java.io.IOException;
  */
 public class LoginFilter implements Filter {
     private static final String NO_VERIFY_URL[] = {
-            "/searchMember","/wechatLogin","regMember","validateIDCard","validateTel","bindWechat"
+            "/searchMember","/wechatLogin"
     };
     private static final int ERR_NOLOGIN = 600;
     private static final String CLIENT_U = "userId";

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.henry.blog.dao.ArticleDao">
+    <!--<cache eviction="FIFO" flushInterval="10800000" size="512" readOnly="true"/>-->
+
+    <resultMap type="Article" id="ResultListArticle">
+        <id column="id" property="id"/>
+        <id column="uuid" property="uuid"/>
+        <result column="create_time" property="createTime"/>
+        <result column="comments" property="comments"/>
+        <result column="title" property="title"/>
+        <result column="category" property="category"/>
+        <result column="content" property="content"/>
+        <result column="brief" property="brief"/>
+    </resultMap>
+    <!-- add Member -->
+    <insert id="addArticle" parameterType="Article" useGeneratedKeys="true" keyProperty="id">
+        <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER">
+            SELECT @@IDENTITY
+        </selectKey>
+        insert into article(
+        uuid,
+        create_time,
+        title,
+        category,
+        content,
+        brief
+        )
+        values(
+        #{uuid},
+        #{createTime},
+        #{title},
+        #{category},
+        #{content},
+        #{brief}
+        )
+    </insert>
+    <select id="getLastedId" resultType="Integer">
+        SELECT id FROM article ORDER BY id DESC LIMIT 1;
+    </select>
+
+    <select id="selectByCategory" resultMap="ResultListArticle">
+        SELECT * FROM article WHERE category = #{category};
+    </select>
+</mapper>

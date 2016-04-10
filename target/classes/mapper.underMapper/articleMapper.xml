@@ -13,7 +13,7 @@
         <result column="title" property="title"/>
         <result column="category" property="category"/>
         <result column="content" property="content"/>
-        <result column="abstracts" property="abstracts"/>
+        <result column="brief" property="brief"/>
     </resultMap>
     <!-- add Member -->
     <insert id="addArticle" parameterType="Article" useGeneratedKeys="true" keyProperty="id">
@@ -26,7 +26,7 @@
         title,
         category,
         content,
-        abstracts
+        brief
         )
         values(
         #{uuid},
@@ -34,10 +34,14 @@
         #{title},
         #{category},
         #{content},
-        #{abstracts}
+        #{brief}
         )
     </insert>
     <select id="getLastedId" resultType="Integer">
         SELECT id FROM article ORDER BY id DESC LIMIT 1;
+    </select>
+
+    <select id="selectByCategory" resultMap="ResultListArticle">
+        SELECT * FROM article WHERE category = #{category};
     </select>
 </mapper>
